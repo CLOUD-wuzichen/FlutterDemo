@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/view/first/first_page_bean.dart';
+import 'package:learn_flutter/bean/first_page_bean.dart';
 
 class HomeBanner extends StatefulWidget {
   final _homeBannerHeight;

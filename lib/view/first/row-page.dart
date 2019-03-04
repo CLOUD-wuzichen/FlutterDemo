@@ -1,160 +1,165 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/bean/RowListBean.dart';
+import 'package:learn_flutter/color.dart';
+import 'package:learn_flutter/test/custom_view.dart';
+import 'package:learn_flutter/utils/DateUtils.dart';
 
-class RowList extends StatelessWidget {
-  final listData = [
-    {"id": 1, "title": "金证", "value": "+9.89"},
-    {"id": 2, "title": "华为", "value": "+4.63"},
-    {"id": 3, "title": "金微蓝", "value": "+10.00"},
-    {"id": 4, "title": "阿里巴巴", "value": "+2.16"},
-    {"id": 5, "title": "腾讯", "value": "+0.53"},
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      height: 100,
-      child: ListView(
-        primary: true,
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Container(
-            color: Colors.blue,
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            width: 100,
-            color: Colors.green,
-            height: 100,
-          ),
-          Container(
-            color: Colors.blue,
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            width: 100,
-            color: Colors.green,
-            height: 100,
-          ),
-          Container(
-            color: Colors.blue,
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            width: 100,
-            color: Colors.green,
-            height: 100,
-          ),
-          Container(
-            color: Colors.blue,
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            width: 100,
-            color: Colors.green,
-            height: 100,
-          ),
-          Container(
-            color: Colors.blue,
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            width: 100,
-            color: Colors.green,
-            height: 100,
-          ),
-        ],
-      ),
-    );
-
-
-//    return Padding(
-//      padding: EdgeInsets.only(top: 10),
-//      child: Column(
-//        children: <Widget>[
-//          Container(
-//            color: Colors.blue,
-//            height: 40,
-//          ),
-//          Container(
-//            color: Colors.green,
-//            height: 40,
-//          ),
-//          ListView(
-//            scrollDirection: Axis.horizontal,
-//            children: <Widget>[
-//              Container(
-//                color: Colors.blue,
-//                width: 40,
-//                height: 40,
-//              ),
-//              Container(
-//                width: 40,
-//                color: Colors.green,
-//                height: 40,
-//              ),
-//            ],
-//          )
-////          ListView.builder(
-////            scrollDirection: Axis.vertical,
-////            itemCount: listData.length,
-////            itemBuilder: (BuildContext context, int index) {
-////              return Container(
-////                width: 50,
-////                height: 50,
-////                child: Text("}"),
-////              );
-////
-//////                return Padding(
-//////                  padding: EdgeInsets.only(left: 5, right: 5),
-//////                  child: Card(
-//////                    elevation: 2.0,
-//////                    color: Colors.white,
-//////                    child: Container(
-//////                      width: 50,
-//////                      height: 50,
-//////                      child: Text("}"),
-//////                    ),
-//////                  ),
-//////                );
-////            },
-////          ),
-//        ],
-//      ),
-//    );
-  }
-}
-
-class RowList2 extends StatefulWidget {
+class RowList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _RowList2State();
+    return new _RowListState();
   }
 }
 
-class _RowList2State extends State<RowList2> {
+class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  List<Feed> feedList = [];
+  int lastKey = 0;
+  int id;
+  int showType;
+  ScrollController _scrollController = new ScrollController();
+
+  void getData() async {
+    Dio dio = new Dio();
+    Response response = await dio
+        .get('http://app3.qdaily.com/app3/columns/index/$id/$lastKey.json');
+    RowResult result = RowResult.fromJson(response.data);
+    if (!result.response.hasMore) {
+      return;
+    }
+    setState(() {
+      lastKey = result.response.lastKey;
+      feedList.addAll(result.response.feeds);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    id = 31;
+    showType = 1;
+    getData();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        getData();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: <Widget>[
-        Container(
-          color: Colors.blue,
-          width: 40,
-          height: 40,
+    if (feedList == null || feedList.length == 0) {
+      return Container();
+    }
+    return Container(
+        color: Colors.white,
+        margin: EdgeInsets.only(
+          top: 10,
         ),
-        Container(
-          width: 40,
-          color: Colors.green,
-          height: 40,
-        ),
-      ],
+        height: 320,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: <Widget>[
+            buildTitleWidget(feedList[0].post.column),
+            buildList()
+          ],
+        ));
+  }
+
+  Widget buildTitleWidget(MyColumn column) {
+    return Container(
+        height: 50,
+        padding: EdgeInsets.only(left: 10),
+        alignment: Alignment.centerLeft,
+        child: Row(
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: NetworkImage(column.icon),
+              radius: 10,
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: textLabel(column.name,
+                    fontSize: 14, fontWeight: FontWeight.w500)),
+          ],
+        ));
+  }
+
+  Widget buildList() {
+    return Flexible(
+      child: ListView.separated(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          scrollDirection: Axis.horizontal,
+          controller: _scrollController,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              width: 270,
+              height: 270,
+              decoration: new BoxDecoration(
+                border: new Border.all(
+                    width: 0.5, color: Color.fromARGB(50, 183, 187, 197)),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Image.network(
+                      feedList[index].image,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    height: 140,
+                    width: 270,
+                  ),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 8),
+                      child: textLabel(
+                        feedList[index].post.title,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        maxLines: 2,
+                      )),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                      child: textLabel(
+                        feedList[index].post.description,
+                        fontWeight: FontWeight.w500,
+                        color: textColor3,
+                        fontSize: 12,
+                        maxLines: 2,
+                      )),
+                  Flexible(
+                      child: Container(
+                          alignment: Alignment.bottomLeft,
+                          margin: EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: textLabel(
+                            "发布于${DateUtils.getNewsTimeStr(feedList[index].post.publishTime * 1000)}",
+                            fontWeight: FontWeight.w500,
+                            color: textColor3,
+                            fontSize: 10,
+                            maxLines: 2,
+                          )))
+                ],
+              ),
+            );
+          },
+          separatorBuilder: (context, idx) {
+            return Container(
+              width: 10,
+              color: Colors.white,
+            );
+          },
+          itemCount: feedList.length),
     );
   }
 }

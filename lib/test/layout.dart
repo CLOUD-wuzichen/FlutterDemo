@@ -8,7 +8,7 @@ import 'package:learn_flutter/route/routers.dart';
 import 'package:learn_flutter/test/custom_view.dart';
 import 'package:learn_flutter/test/eventbus.dart';
 import 'package:learn_flutter/view/first/banner-view.dart';
-import 'package:learn_flutter/view/first/first_page_bean.dart';
+import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LayoutWidget extends StatefulWidget {

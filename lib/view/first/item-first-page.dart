@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/view/first/banner-view.dart';
-import 'package:learn_flutter/view/first/first_page_bean.dart';
+import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:learn_flutter/view/first/row-page.dart';
 
 class ListViewItem extends StatelessWidget {

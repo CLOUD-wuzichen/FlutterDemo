@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
 
-
 //TitleBar start
 class TitleBar extends StatelessWidget {
-
   final int bgColor;
   final String title;
 
@@ -39,12 +37,11 @@ class TitleBar extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Center(
-                        child: Text(title,
-                          style: TextStyle(
-                              fontSize: 17, color: Color(textColor1)),
-                          maxLines: 1,
-                        )
-                    ),
+                        child: Text(
+                      title,
+                      style: TextStyle(fontSize: 17, color: Color(textColor1)),
+                      maxLines: 1,
+                    )),
                     backWidget,
                     rightWidget,
                   ],
@@ -72,10 +69,8 @@ class TitleBar extends StatelessWidget {
               child: SizedBox.fromSize(
                 size: Size(23, 23),
                 child: Image.asset("assets/ic_back.png"),
-              )
-          ),
-        )
-    );
+              )),
+        ));
   }
 
   Widget get rightWidget {
@@ -85,24 +80,26 @@ class TitleBar extends StatelessWidget {
         offstage: this.right == null || this.right.onClickRight == null,
         child: Align(
           alignment: Alignment.centerRight,
-          child: this.right.rightIcon != null ?
-          Container(
-              height: 45,
-              width: 40,
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 23,
-                height: 23,
-                child: Image.asset(this.right.rightIcon),
-              )
-          ) : Container(
-              height: 45,
-              width: 40,
-              alignment: Alignment.center,
-              child: Text(
-                this.right.rightTitle != null ? this.right.rightTitle : "更多",
-                style: TextStyle(fontSize: 14, color: Color(textColor1)),)
-          ),
+          child: this.right.rightIcon != null
+              ? Container(
+                  height: 45,
+                  width: 40,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: 23,
+                    height: 23,
+                    child: Image.asset(this.right.rightIcon),
+                  ))
+              : Container(
+                  height: 45,
+                  width: 40,
+                  alignment: Alignment.center,
+                  child: Text(
+                    this.right.rightTitle != null
+                        ? this.right.rightTitle
+                        : "更多",
+                    style: TextStyle(fontSize: 14, color: Color(textColor1)),
+                  )),
         ),
       ),
     );
@@ -114,7 +111,6 @@ class TitleBarRight {
   String rightIcon;
   GestureTapCallback onClickRight;
 
-
   TitleBarRight({
     this.rightTitle,
     this.rightIcon,
@@ -122,3 +118,20 @@ class TitleBarRight {
   });
 }
 //TitleBar end
+
+Widget textLabel(String text,
+    {double fontSize = 12,
+    var textAlign = TextAlign.left,
+    var overflow = TextOverflow.ellipsis,
+    int maxLines = 1,
+    int color = 0xFF000000,
+    FontWeight fontWeight = FontWeight.normal}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    textAlign: textAlign,
+    overflow: overflow,
+    style: TextStyle(
+        fontSize: fontSize, color: Color(color), fontWeight: fontWeight),
+  );
+}
