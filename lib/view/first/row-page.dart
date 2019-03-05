@@ -62,10 +62,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
     }
     return Container(
         color: Colors.white,
-        margin: EdgeInsets.only(
-          top: 10,
-        ),
-        height: 320,
+        height: 310,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
@@ -103,7 +100,6 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               width: 270,
-              height: 270,
               decoration: new BoxDecoration(
                 border: new Border.all(
                     width: 0.5, color: Color.fromARGB(50, 183, 187, 197)),
@@ -142,12 +138,54 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                           alignment: Alignment.bottomLeft,
                           margin: EdgeInsets.only(bottom: 10),
                           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: textLabel(
-                            "发布于${DateUtils.getNewsTimeStr(feedList[index].post.publishTime * 1000)}",
-                            fontWeight: FontWeight.w500,
-                            color: textColor3,
-                            fontSize: 10,
-                            maxLines: 2,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "assets/ic_comment.png",
+                                      fit: BoxFit.fitHeight,
+                                      width: 12,
+                                    ),
+                                    Padding(padding: EdgeInsets.only(right: 2)),
+                                    textLabel(
+                                      " ${feedList[index].post.commentCount} ",
+                                      color: textColor3,
+                                      fontSize: 12,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.only(right: 4)),
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "assets/ic_star.png",
+                                      fit: BoxFit.fitHeight,
+                                      width: 12,
+                                    ),
+                                    Padding(padding: EdgeInsets.only(right: 2)),
+                                    textLabel(
+                                      "${feedList[index].post.praiseCount}",
+                                      color: textColor3,
+                                      fontSize: 12,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.only(right: 8)),
+                              Container(
+                                child: textLabel(
+                                  DateUtils.getNewsTimeStr(
+                                      feedList[index].post.publishTime * 1000),
+                                  color: textColor3,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
                           )))
                 ],
               ),

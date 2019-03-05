@@ -50,21 +50,26 @@ class _FirstPageState extends State<FirstPage>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(backgroundColor),
-      child: RefreshIndicator(
-        onRefresh: _refresh,
-        child: ListView.builder(
-            controller: _scrollController,
-            itemCount: items.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == items.length) {
+        color: Color(backgroundColor),
+        child: RefreshIndicator(
+          onRefresh: _refresh,
+          child: ListView.separated(
+              controller: _scrollController,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == items.length) {
                 return HomePageBottom(_hasMore);
               } else {
                 return ListViewItem(items[index]);
               }
-            }),
-      ),
-    );
+              },
+              separatorBuilder: (context, idx) {
+                return Container(
+                  height: idx==0?6:10,
+                );
+              },
+              itemCount: items.length + 1),
+        )
+        );
   }
 
   Future<Null> _refresh() async {

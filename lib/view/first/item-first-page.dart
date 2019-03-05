@@ -44,8 +44,8 @@ class ListViewItem extends StatelessWidget {
     }
     return Card(
         color: Color(whiteColor),
-        elevation: 4.0,
-        margin: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+        elevation: 3.0,
+        margin: EdgeInsets.only(left: 10, right: 10),
         child: Container(
           alignment: Alignment.centerLeft,
           height: 70,

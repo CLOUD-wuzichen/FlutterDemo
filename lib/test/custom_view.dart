@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
 
-//TitleBar start
+////TitleBar start
 class TitleBar extends StatelessWidget {
   final int bgColor;
   final String title;
@@ -117,8 +117,9 @@ class TitleBarRight {
     this.onClickRight,
   });
 }
-//TitleBar end
+////TitleBar end
 
+////TextView start
 Widget textLabel(String text,
     {double fontSize = 12,
     var textAlign = TextAlign.left,
@@ -135,3 +136,4 @@ Widget textLabel(String text,
         fontSize: fontSize, color: Color(color), fontWeight: fontWeight),
   );
 }
+////TextView end
