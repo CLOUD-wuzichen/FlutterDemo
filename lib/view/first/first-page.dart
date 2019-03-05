@@ -1,12 +1,11 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/utils/net_utils.dart';
-import 'package:learn_flutter/view/first/banner-view.dart';
-import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:learn_flutter/view/first/item-first-page-bottom.dart';
 import 'package:learn_flutter/view/first/item-first-page.dart';
-import 'package:learn_flutter/view/first/row-page.dart';
 
 class FirstPage extends StatefulWidget {
   @override

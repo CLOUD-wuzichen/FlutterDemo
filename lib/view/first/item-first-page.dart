@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
+import 'package:learn_flutter/route/application.dart';
+import 'package:learn_flutter/route/routers.dart';
 import 'package:learn_flutter/view/first/banner-view.dart';
 import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:learn_flutter/view/first/row-page.dart';
@@ -42,35 +44,41 @@ class ListViewItem extends StatelessWidget {
     if (item == type_list) {
       return RowList();
     }
-    return Card(
-        color: Color(whiteColor),
-        elevation: 3.0,
-        margin: EdgeInsets.only(left: 10, right: 10),
-        child: Container(
-          alignment: Alignment.centerLeft,
-          height: 70,
-          child: ListTile(
-              trailing: Icon(
-                Icons.keyboard_arrow_right,
-                color: Colors.grey,
-                size: 24.0,
-              ),
-              title: Text(
-                "${item.title}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Color(textColor1), fontSize: 15),
-              ),
-              subtitle: Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: Text(
-                  "${'👲'}:  ${item.username}",
-                  style: TextStyle(
-                    color: Color(textColor3),
-                    fontSize: 12,
-                  ),
+    return GestureDetector(
+      onTap: (){
+        Application.router.navigateTo(context,
+            '${Routes.webView}?title=${Uri.encodeComponent(item.title)}&url=${Uri.encodeComponent(item.detailUrl)}');
+      },
+      child: Card(
+          color: Color(whiteColor),
+          elevation: 3.0,
+          margin: EdgeInsets.only(left: 10, right: 10),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            height: 70,
+            child: ListTile(
+                trailing: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.grey,
+                  size: 24.0,
                 ),
-              )),
-        ));
+                title: Text(
+                  "${item.title}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Color(textColor1), fontSize: 15),
+                ),
+                subtitle: Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Text(
+                    "${'👲'}:  ${item.username}",
+                    style: TextStyle(
+                      color: Color(textColor3),
+                      fontSize: 12,
+                    ),
+                  ),
+                )),
+          )),
+    );
   }
 }

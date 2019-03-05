@@ -26,6 +26,7 @@ class TestState extends State<TestWidget> {
       if (mounted) {
         setState(() {
           _exampleCode = code ?? 'Example code not found';
+          print('_exampleCode=======$_exampleCode');
         });
       }
     });
