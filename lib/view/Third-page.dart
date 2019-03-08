@@ -9,8 +9,9 @@ class ThirdPage extends StatefulWidget {
   }
 }
 
-class _ThirdPageState extends State<ThirdPage> {
-
+class _ThirdPageState extends State<ThirdPage> with AutomaticKeepAliveClientMixin{
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

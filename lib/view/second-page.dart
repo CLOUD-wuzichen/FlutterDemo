@@ -9,7 +9,10 @@ class SecondPage extends StatefulWidget {
   }
 }
 
-class _SecondPageState extends State<SecondPage> {
+class _SecondPageState extends State<SecondPage> with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,5 +22,6 @@ class _SecondPageState extends State<SecondPage> {
       ),
     );
   }
+
 
 }

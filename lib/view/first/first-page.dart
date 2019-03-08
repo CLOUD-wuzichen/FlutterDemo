@@ -6,7 +6,7 @@ import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/utils/net_utils.dart';
 import 'package:learn_flutter/view/first/item-first-page-bottom.dart';
 import 'package:learn_flutter/view/first/item-first-page.dart';
-
+import 'package:after_layout/after_layout.dart';
 class FirstPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +15,7 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin , AfterLayoutMixin<FirstPage>{
   ScrollController _scrollController = new ScrollController();
 
   List items = new List();
@@ -39,11 +39,13 @@ class _FirstPageState extends State<FirstPage>
       }
     });
   }
-
+  @override
+  void afterFirstLayout(BuildContext context) {
+  }
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -155,4 +157,5 @@ class _FirstPageState extends State<FirstPage>
     };
     return result;
   }
+
 }

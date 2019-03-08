@@ -1,35 +1,36 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/test/test.dart';
+import 'package:learn_flutter/view/native.dart';
+import 'package:learn_flutter/view/first/web-view-page.dart';
 import 'package:learn_flutter/view/home-page.dart';
-import 'package:learn_flutter/view/web-view-page.dart';
 
 class Routes {
   static String root = "/";
   static String home = "/home";
   static String webView = '/web-view';
 
-  static String test = '/test';
+  static String native = '/native';
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
         handlerFunc:
             (BuildContext context, Map<String, List<String>> params) {});
     router.define(home, handler: homeHandler);
-    router.define(webView, handler: webViewHandler,transitionType: TransitionType.inFromRight);
-
-    router.define(test, handler: testHandler);
+    router.define(webView,
+        handler: webViewHandler, transitionType: TransitionType.inFromRight);
+    router.define(native,
+        handler: nativeHandler, transitionType: TransitionType.inFromRight);
   }
 }
 
-//// app的首页
+// app的首页
 var homeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return new AppPage();
   },
 );
 
-//// webView
+// webView
 var webViewHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String title = params["title"]?.first;
@@ -41,9 +42,9 @@ var webViewHandler = new Handler(
   },
 );
 
-var testHandler = new Handler(
+// 原生
+var nativeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    String filePath = params["filePath"]?.first;
-    return new TestWidget(filePath: filePath);
+    return new NativeWidget();
   },
 );

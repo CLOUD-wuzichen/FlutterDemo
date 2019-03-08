@@ -46,7 +46,7 @@ class LayoutState extends State<LayoutWidget> with WidgetsBindingObserver {
           ),
           onDeleted: () {
             Application.router.navigateTo(ccc,
-                '${Routes.test}?filePath=${Uri.encodeComponent("lib/test/net.dart")}');
+                '${Routes.native}?filePath=${Uri.encodeComponent("lib/test/net.dart")}');
           },
         ),
         Chip(

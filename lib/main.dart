@@ -4,6 +4,7 @@ import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/route/application.dart';
 import 'package:learn_flutter/route/routers.dart';
 import 'package:learn_flutter/view/home-page.dart';
+import 'package:learn_flutter/view/home-page2.dart';
 
 void main() {
   runApp(new MyApp());
