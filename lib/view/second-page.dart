@@ -16,6 +16,7 @@ class _SecondPageState extends State<SecondPage> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new Scaffold(
       body: Container(
         child: Text("second"),

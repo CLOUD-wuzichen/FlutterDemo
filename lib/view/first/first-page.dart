@@ -31,6 +31,9 @@ class _FirstPageState extends State<FirstPage>
   @override
   void initState() {
     super.initState();
+  }
+  @override
+  void afterFirstLayout(BuildContext context) {
     _getMoreData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -40,9 +43,6 @@ class _FirstPageState extends State<FirstPage>
     });
   }
   @override
-  void afterFirstLayout(BuildContext context) {
-  }
-  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
@@ -50,6 +50,7 @@ class _FirstPageState extends State<FirstPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
         color: Color(backgroundColor),
         child: RefreshIndicator(

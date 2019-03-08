@@ -14,6 +14,7 @@ class _ThirdPageState extends State<ThirdPage> with AutomaticKeepAliveClientMixi
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new Scaffold(
       body: Container(
         child: Text("third"),

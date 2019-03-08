@@ -30,6 +30,7 @@ class _FourthPageState extends State<FourthPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new Material(
       child: new Center(
         child: new Column(

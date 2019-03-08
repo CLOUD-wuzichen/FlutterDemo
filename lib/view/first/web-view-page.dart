@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:learn_flutter/test/custom_view.dart';
-
+import 'package:after_layout/after_layout.dart';
 class WebViewWidget extends StatefulWidget {
   final String url;
   final String title;
@@ -14,15 +13,19 @@ class WebViewWidget extends StatefulWidget {
   WebViewState createState() => new WebViewState();
 }
 
-class WebViewState extends State<WebViewWidget> {
+class WebViewState extends State<WebViewWidget> with AfterLayoutMixin<WebViewWidget> {
 
-  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  var flutterWebviewPlugin ;
 
   @override
   void initState() {
     super.initState();
+  }
+  @override
+  void afterFirstLayout(BuildContext context) {
+    flutterWebviewPlugin = new FlutterWebviewPlugin();
     flutterWebviewPlugin.onUrlChanged.listen((String url) {
-        print(" $url");
+      print(" $url");
     });
   }
   @override
