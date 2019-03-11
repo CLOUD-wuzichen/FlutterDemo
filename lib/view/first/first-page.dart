@@ -56,6 +56,7 @@ class _FirstPageState extends State<FirstPage>
         child: RefreshIndicator(
           onRefresh: _refresh,
           child: ListView.separated(
+              physics: new AlwaysScrollableScrollPhysics(),
               controller: _scrollController,
               itemBuilder: (BuildContext context, int index) {
                 if (index == items.length) {
