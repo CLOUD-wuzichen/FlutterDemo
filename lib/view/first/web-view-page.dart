@@ -3,42 +3,60 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:learn_flutter/test/custom_view.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:learn_flutter/view/first/collection.dart';
+
 class WebViewWidget extends StatefulWidget {
   final String url;
   final String title;
 
-  const WebViewWidget({Key key, this.url, this.title}) : super(key: key);
+  WebViewWidget({Key key, @required this.title, @required this.url})
+      : super(key: key);
 
   @override
   WebViewState createState() => new WebViewState();
 }
 
-class WebViewState extends State<WebViewWidget> with AfterLayoutMixin<WebViewWidget> {
-
-  var flutterWebviewPlugin ;
+class WebViewState extends State<WebViewWidget>
+    with AfterLayoutMixin<WebViewWidget> {
+  bool _isCollected = false;
+  var flutterWebViewPlugin;
+  CollectionControlModel _collectionControl = new CollectionControlModel();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-  }
-  @override
-  void afterFirstLayout(BuildContext context) {
-    flutterWebviewPlugin = new FlutterWebviewPlugin();
-    flutterWebviewPlugin.onUrlChanged.listen((String url) {
-      print(" $url");
+    _collectionControl.queryCollectStatus(widget.url).then((List list){
+      if (mounted) {
+        setState(() {
+          _isCollected = list.length > 0;
+        });
+      }
     });
   }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    flutterWebViewPlugin = new FlutterWebviewPlugin();
+    flutterWebViewPlugin.onUrlChanged.listen((String url) {
+//      print(" $url");
+    });
+  }
+
   @override
   void dispose() {
-    flutterWebviewPlugin.dispose();
+    flutterWebViewPlugin.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(),
+      key: _scaffoldKey,
       appBar: TitleBar(
         title: widget.title,
+        right: TitleBarRight(
+            rightIcon: _collectedIcon(), onClickRight: _collection),
         onBack: () {
           Navigator.of(context).pop();
         },
@@ -48,8 +66,44 @@ class WebViewState extends State<WebViewWidget> with AfterLayoutMixin<WebViewWid
         withZoom: false,
         withLocalStorage: true,
         withJavascript: true,
-
       ),
     );
+  }
+
+  Icon _collectedIcon() {
+    if (_isCollected) {
+      return Icon(Icons.favorite);
+    } else {
+      return Icon(Icons.favorite_border);
+    }
+  }
+
+  _collection() {
+    if (_isCollected) {
+      // 删除操作
+      _collectionControl.deleteByUrl(widget.url).then((result) {
+        if (result > 0 && this.mounted) {
+          setState(() {
+            _isCollected = false;
+          });
+          _scaffoldKey.currentState
+              .showSnackBar(SnackBar(content: Text('已取消收藏')));
+          return;
+        }
+      });
+    } else {
+      // 插入操作
+      _collectionControl
+          .insert(Collection(title: widget.title, url: widget.url).toJson())
+          .then((result) {
+        if (this.mounted) {
+          setState(() {
+            _isCollected = true;
+          });
+          _scaffoldKey.currentState
+              .showSnackBar(SnackBar(content: Text('收藏成功')));
+        }
+      });
+    }
   }
 }

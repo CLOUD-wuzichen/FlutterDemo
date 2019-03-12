@@ -93,7 +93,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                   child: SizedBox(
                     width: 23,
                     height: 23,
-                    child: Image.asset(this.right.rightIcon),
+                    child: this.right.rightIcon,
                   ))
               : Container(
                   height: 45,
@@ -116,7 +116,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
 
 class TitleBarRight {
   String rightTitle;
-  String rightIcon;
+  Icon rightIcon;
   GestureTapCallback onClickRight;
 
   TitleBarRight({

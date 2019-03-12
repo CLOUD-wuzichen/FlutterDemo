@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/route/application.dart';
 import 'package:learn_flutter/route/routers.dart';
+import 'package:learn_flutter/utils/provide.dart';
 import 'package:learn_flutter/view/home-page.dart';
 
-void main() {
+void main() async{
+  await new Provider().init();
   runApp(new MyApp());
 }
 
 
 class MyApp extends StatelessWidget {
 
-  MyApp() {
+   MyApp() {
     final router = new Router();
     Routes.configureRoutes(router);
     Application.router = router;

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/bean/RowListBean.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/test/custom_view.dart';
-import 'package:learn_flutter/utils/DateUtils.dart';
+import 'package:learn_flutter/utils/dateUtils.dart';
+import 'package:learn_flutter/utils/net_utils.dart';
 
 class RowList extends StatefulWidget {
   @override
@@ -22,10 +23,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController = new ScrollController();
 
   void getData() async {
-    Dio dio = new Dio();
-    Response response = await dio
-        .get('http://app3.qdaily.com/app3/columns/index/$id/$lastKey.json');
-    RowResult result = RowResult.fromJson(response.data);
+    RowResult result =  RowResult.fromJson(await NetUtils.get('http://app3.qdaily.com/app3/columns/index/$id/$lastKey.json'));
     if (!result.response.hasMore) {
       return;
     }
