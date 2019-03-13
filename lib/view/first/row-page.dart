@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/bean/RowListBean.dart';
 import 'package:learn_flutter/color.dart';
-import 'package:learn_flutter/test/custom_view.dart';
 import 'package:learn_flutter/utils/dateUtils.dart';
 import 'package:learn_flutter/utils/net_utils.dart';
+import 'package:learn_flutter/widget/custom_view.dart';
 
 class RowList extends StatefulWidget {
   @override
@@ -83,7 +82,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
             ),
             Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: textLabel(column.name,
+                child: TextLabel(column.name,
                     fontSize: 14, fontWeight: FontWeight.w500)),
           ],
         ));
@@ -115,7 +114,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                   Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 8),
-                      child: textLabel(
+                      child: TextLabel(
                         feedList[index].post.title,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
@@ -124,7 +123,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                   Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: textLabel(
+                      child: TextLabel(
                         feedList[index].post.description,
                         fontWeight: FontWeight.w500,
                         color: textColor3,
@@ -148,7 +147,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                                       width: 12,
                                     ),
                                     Padding(padding: EdgeInsets.only(right: 2)),
-                                    textLabel(
+                                    TextLabel(
                                       " ${feedList[index].post.commentCount} ",
                                       color: textColor3,
                                       fontSize: 12,
@@ -166,7 +165,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                                       width: 12,
                                     ),
                                     Padding(padding: EdgeInsets.only(right: 2)),
-                                    textLabel(
+                                    TextLabel(
                                       "${feedList[index].post.praiseCount}",
                                       color: textColor3,
                                       fontSize: 12,
@@ -176,7 +175,7 @@ class _RowListState extends State<RowList> with AutomaticKeepAliveClientMixin {
                               ),
                               Padding(padding: EdgeInsets.only(right: 8)),
                               Container(
-                                child: textLabel(
+                                child: TextLabel(
                                   DateUtils.getNewsTimeStr(
                                       feedList[index].post.publishTime * 1000),
                                   color: textColor3,

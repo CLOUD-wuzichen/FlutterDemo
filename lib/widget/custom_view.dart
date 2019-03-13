@@ -128,7 +128,7 @@ class TitleBarRight {
 ////TitleBar end
 
 ////TextView start
-Widget textLabel(String text,
+Widget TextLabel(String text,
     {double fontSize = 12,
     var textAlign = TextAlign.left,
     var overflow = TextOverflow.ellipsis,

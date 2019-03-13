@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/test/custom_view.dart';
+import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:native_plugin/native_plugin.dart';
 
 class NativeWidget extends StatefulWidget {

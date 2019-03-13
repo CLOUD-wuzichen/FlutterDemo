@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:learn_flutter/test/custom_view.dart';
+import 'package:learn_flutter/utils/widget-utils.dart';
+import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:learn_flutter/view/first/collection.dart';
 
@@ -21,7 +22,6 @@ class WebViewState extends State<WebViewWidget>
   bool _isCollected = false;
   var flutterWebViewPlugin;
   CollectionControlModel _collectionControl = new CollectionControlModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -52,7 +52,6 @@ class WebViewState extends State<WebViewWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: TitleBar(
         title: widget.title,
         right: TitleBarRight(
@@ -86,9 +85,7 @@ class WebViewState extends State<WebViewWidget>
           setState(() {
             _isCollected = false;
           });
-          _scaffoldKey.currentState
-              .showSnackBar(SnackBar(content: Text('已取消收藏')));
-          return;
+          WidgetUtils.showToast("取消收藏");
         }
       });
     } else {
@@ -100,8 +97,7 @@ class WebViewState extends State<WebViewWidget>
           setState(() {
             _isCollected = true;
           });
-          _scaffoldKey.currentState
-              .showSnackBar(SnackBar(content: Text('收藏成功')));
+          WidgetUtils.showToast("收藏成功");
         }
       });
     }

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/route/application.dart';
 import 'package:learn_flutter/route/routers.dart';
-import 'package:learn_flutter/test/custom_view.dart';
+import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:learn_flutter/test/eventbus.dart';
 import 'package:learn_flutter/view/first/banner-view.dart';
 import 'package:learn_flutter/bean/first_page_bean.dart';
