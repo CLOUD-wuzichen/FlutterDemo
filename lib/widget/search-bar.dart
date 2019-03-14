@@ -45,7 +45,7 @@ class SearchTitleBar extends StatelessWidget {
 ////搜索标题bar end
 
 ////搜索输入bar start
-typedef SearchCallback = void Function(String str);
+typedef SearchCallback = void Function(String title);
 
 class SearchInputBar extends StatefulWidget implements PreferredSizeWidget {
   final SearchCallback _callback;
@@ -91,12 +91,13 @@ class SearchInputState extends State<SearchInputBar> {
                       controller: controller,
                       textInputAction: TextInputAction.search,
                       onSubmitted: (str) {
+                        controller.clear();
                         widget._callback(str);
                       },
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.search,
-                          size: 24.0,
+                          size: 22.0,
                           color: Color(textColor3),
                         ),
                         border: InputBorder.none,

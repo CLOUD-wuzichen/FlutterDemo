@@ -4,7 +4,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:learn_flutter/utils/widget-utils.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:learn_flutter/view/first/collection.dart';
+import 'package:learn_flutter/view/first/sql-collection.dart';
 
 class WebViewWidget extends StatefulWidget {
   final String url;

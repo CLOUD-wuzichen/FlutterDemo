@@ -1,4 +1,5 @@
-import 'package:learn_flutter/view/first/collection.dart';
+import 'package:learn_flutter/view/first/sql-collection.dart';
+import 'package:learn_flutter/view/first/sql-search.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,6 +26,7 @@ class Provider {
       db = await openDatabase(path, version: 1,
           onCreate: (Database db, int version) async {
         await db.execute(CollectionControlModel.createSql);
+        await db.execute(SearchControlModel.createSql);
         print('db created version is $version');
       }, onOpen: (Database db) async {
         print('db opened');
@@ -36,7 +38,10 @@ class Provider {
 
   // 检查数据库中, 表是否完整, 在部份android中, 会出现表丢失的情况
   Future checkTableIsRight() async {
-    List<String> expectTables = [CollectionControlModel.tableName];
+    List<String> expectTables = [
+      CollectionControlModel.tableName,
+      SearchControlModel.tableName
+    ];
     List<String> tables = await getTables();
     for (int i = 0; i < expectTables.length; i++) {
       if (!tables.contains(expectTables[i])) {
@@ -83,6 +88,10 @@ class Sql {
   Future<int> delete(String value, String key) async {
     return await Provider.db
         .delete(tableName, where: '$key = ?', whereArgs: [value]);
+  }
+
+  Future<int> deleteAll() async {
+    return await Provider.db.delete(tableName);
   }
 
   Future<List> getByCondition({Map<dynamic, dynamic> conditions}) async {
