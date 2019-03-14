@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/bean/first_page_bean.dart';
@@ -7,6 +6,8 @@ import 'package:learn_flutter/utils/net_utils.dart';
 import 'package:learn_flutter/view/first/item-first-page-bottom.dart';
 import 'package:learn_flutter/view/first/item-first-page.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:learn_flutter/widget/search-bar.dart';
+
 class FirstPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +16,7 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage>
-    with AutomaticKeepAliveClientMixin , AfterLayoutMixin<FirstPage>{
+    with AutomaticKeepAliveClientMixin, AfterLayoutMixin<FirstPage> {
   ScrollController _scrollController = new ScrollController();
 
   List items = new List();
@@ -32,6 +33,7 @@ class _FirstPageState extends State<FirstPage>
   void initState() {
     super.initState();
   }
+
   @override
   void afterFirstLayout(BuildContext context) {
     _getMoreData();
@@ -42,6 +44,7 @@ class _FirstPageState extends State<FirstPage>
       }
     });
   }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -51,28 +54,35 @@ class _FirstPageState extends State<FirstPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
-        color: Color(backgroundColor),
-        child: RefreshIndicator(
-          onRefresh: _refresh,
-          child: ListView.separated(
-              physics: new AlwaysScrollableScrollPhysics(),
-              controller: _scrollController,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == items.length) {
-                return HomePageBottom(_hasMore);
-              } else {
-                return ListViewItem(items[index]);
-              }
-              },
-              separatorBuilder: (context, idx) {
-                return Container(
-                  height: idx==0?6:10,
-                );
-              },
-              itemCount: items.length + 1),
-        )
-        );
+    return SafeArea(
+        bottom: false,
+        child: Stack(
+          children: <Widget>[
+            Container(
+                color: Color(backgroundColor),
+                child: RefreshIndicator(
+                  onRefresh: _refresh,
+                  child: ListView.separated(
+                      physics: new AlwaysScrollableScrollPhysics(),
+                      controller: _scrollController,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == items.length) {
+                          return HomePageBottom(_hasMore);
+                        } else {
+                          return ListViewItem(items[index]);
+                        }
+                      },
+                      separatorBuilder: (context, idx) {
+                        return Container(
+                          height: idx == 0 ? 6 : 10,
+                        );
+                      },
+                      itemCount: items.length + 1),
+                )),
+            SearchTitleBar(
+            ),
+          ],
+        ));
   }
 
   Future<Null> _refresh() async {
@@ -159,5 +169,4 @@ class _FirstPageState extends State<FirstPage>
     };
     return result;
   }
-
 }

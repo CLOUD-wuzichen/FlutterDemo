@@ -25,32 +25,23 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       title = title.substring(0, 14) + "...";
     }
     return SafeArea(
-      bottom: false,
       child: Column(children: <Widget>[
-        Flex(
-          direction: Axis.horizontal,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 45,
-                color: Color(bgColor),
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                        child: Text(
-                      title,
-                      style: TextStyle(fontSize: 17, color: Color(textColor1)),
-                      maxLines: 1,
-                    )),
-                    buildBackWidget(),
-                    buildRightWidget(),
-                  ],
-                ),
-              ),
-            )
-          ],
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 45,
+          color: Color(bgColor),
+          child: Stack(
+            children: <Widget>[
+              Center(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 17, color: Color(textColor1)),
+                    maxLines: 1,
+                  )),
+              buildBackWidget(),
+              buildRightWidget(),
+            ],
+          ),
         ),
         Container(
           color: Color(dividerColor),
@@ -67,7 +58,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
           offstage: this.onBack == null,
           child: Container(
               height: 45,
-              padding: EdgeInsets.only(left: 15, right: 10),
+              width: 50,
+              alignment: Alignment.center,
               child: SizedBox.fromSize(
                 size: Size(23, 23),
                 child: Image.asset("assets/ic_back.png"),
@@ -88,7 +80,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
           child: this.right.rightIcon != null
               ? Container(
                   height: 45,
-                  width: 40,
+                  width: 50,
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: 23,
@@ -97,7 +89,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
                   ))
               : Container(
                   height: 45,
-                  width: 40,
+                  width: 50,
                   alignment: Alignment.center,
                   child: Text(
                     this.right.rightTitle != null

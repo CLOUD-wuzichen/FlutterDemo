@@ -34,9 +34,6 @@ class _MyHomePageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-
-      ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _controller,

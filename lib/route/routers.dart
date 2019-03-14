@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/view/first/search-input.dart';
 import 'package:learn_flutter/view/native.dart';
 import 'package:learn_flutter/view/first/web-view-page.dart';
 import 'package:learn_flutter/view/home-page.dart';
@@ -8,7 +9,7 @@ class Routes {
   static String root = "/";
   static String home = "/home";
   static String webView = '/web-view';
-
+  static String search = '/search';
   static String native = '/native';
 
   static void configureRoutes(Router router) {
@@ -20,6 +21,8 @@ class Routes {
         handler: webViewHandler, transitionType: TransitionType.inFromRight);
     router.define(native,
         handler: nativeHandler, transitionType: TransitionType.inFromRight);
+    router.define(search,
+        handler: searchHandler, transitionType: TransitionType.fadeIn);
   }
 }
 
@@ -46,5 +49,12 @@ var webViewHandler = new Handler(
 var nativeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return new NativeWidget();
+  },
+);
+
+// 搜索
+var searchHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return new SearchPageWidget();
   },
 );
