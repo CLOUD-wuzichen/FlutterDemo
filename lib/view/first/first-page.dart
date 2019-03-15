@@ -18,6 +18,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage>
     with AutomaticKeepAliveClientMixin, AfterLayoutMixin<FirstPage> {
   ScrollController _scrollController = new ScrollController();
+  TitleBarAlphaController _alphaController =new TitleBarAlphaController();
 
   List items = new List();
   int _pageIndex = 0;
@@ -42,6 +43,13 @@ class _FirstPageState extends State<FirstPage>
           _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
+      double percent;
+      if (_scrollController.offset <= 200) {
+        percent = _scrollController.offset / 200;
+      } else {
+        percent = 1;
+      }
+      _alphaController.put((percent * 255).round());
     });
   }
 
@@ -79,8 +87,7 @@ class _FirstPageState extends State<FirstPage>
                       },
                       itemCount: items.length + 1),
                 )),
-            SearchTitleBar(
-            ),
+            SearchTitleBar(_alphaController),
           ],
         ));
   }

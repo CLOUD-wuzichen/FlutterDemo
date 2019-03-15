@@ -5,12 +5,50 @@ import 'package:learn_flutter/route/routers.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
 
 ////搜索标题bar start
-class SearchTitleBar extends StatelessWidget {
+typedef AlphaCallback = void Function(int alpha);
+
+abstract class AlphaListenable {
+  void addListener(AlphaCallback listener);
+}
+
+class TitleBarAlphaController implements AlphaListenable {
+  AlphaCallback _callback;
+
+  @override
+  void addListener(AlphaCallback callback) {
+    this._callback = callback;
+  }
+
+  void put(int alpha) {
+    _callback(alpha);
+  }
+}
+
+class SearchTitleBar extends StatefulWidget {
+  final TitleBarAlphaController _listenable;
+  SearchTitleBar(this._listenable);
+  @override
+  SearchTitleState createState() => new SearchTitleState();
+}
+
+class SearchTitleState extends State<SearchTitleBar> {
+  int _alpha = 0;
+  @override
+  void initState() {
+    super.initState();
+    widget._listenable.addListener((value) {
+      if (!mounted) return;
+      setState(() {
+        this._alpha = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: Colors.transparent,
+      color: Color.fromARGB(_alpha, 255, 255, 255),
       height: 45,
       width: MediaQuery.of(context).size.width,
       child: GestureDetector(
