@@ -2,30 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/route/application.dart';
 import 'package:learn_flutter/route/routers.dart';
+import 'package:learn_flutter/utils/utils.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
 
 ////搜索标题bar start
-typedef AlphaCallback = void Function(int alpha);
-
-abstract class AlphaListenable {
-  void addListener(AlphaCallback listener);
-}
-
-class TitleBarAlphaController implements AlphaListenable {
-  AlphaCallback _callback;
-
-  @override
-  void addListener(AlphaCallback callback) {
-    this._callback = callback;
-  }
-
-  void put(int alpha) {
-    _callback(alpha);
-  }
-}
-
 class SearchTitleBar extends StatefulWidget {
-  final TitleBarAlphaController _listenable;
+  final ScrollListenable _listenable;
   SearchTitleBar(this._listenable);
   @override
   SearchTitleState createState() => new SearchTitleState();
@@ -39,7 +21,13 @@ class SearchTitleState extends State<SearchTitleBar> {
     widget._listenable.addListener((value) {
       if (!mounted) return;
       setState(() {
-        this._alpha = value;
+        double percent;
+        if (value <= 200) {
+          percent = value / 200;
+        } else {
+          percent = 1;
+        }
+        this._alpha = (percent * 255).round();
       });
     });
   }
@@ -83,8 +71,6 @@ class SearchTitleState extends State<SearchTitleBar> {
 ////搜索标题bar end
 
 ////搜索输入bar start
-typedef SearchCallback = void Function(String title);
-
 class SearchInputBar extends StatefulWidget implements PreferredSizeWidget {
   final SearchCallback _callback;
   SearchInputBar(this._callback);

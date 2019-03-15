@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_flutter/bean/first_page_bean.dart';
 import 'package:learn_flutter/color.dart';
 import 'package:learn_flutter/utils/net_utils.dart';
+import 'package:learn_flutter/utils/utils.dart';
 import 'package:learn_flutter/view/first/item-first-page-bottom.dart';
 import 'package:learn_flutter/view/first/item-first-page.dart';
 import 'package:after_layout/after_layout.dart';
@@ -18,7 +19,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage>
     with AutomaticKeepAliveClientMixin, AfterLayoutMixin<FirstPage> {
   ScrollController _scrollController = new ScrollController();
-  TitleBarAlphaController _alphaController = new TitleBarAlphaController();
+  CustomScrollController _customScrollController = new CustomScrollController();
 
   List items = new List();
   int _pageIndex = 0;
@@ -43,13 +44,7 @@ class _FirstPageState extends State<FirstPage>
           _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
-      double percent;
-      if (_scrollController.offset <= 200) {
-        percent = _scrollController.offset / 200;
-      } else {
-        percent = 1;
-      }
-      _alphaController.put((percent * 255).round());
+      _customScrollController.notify(_scrollController.offset);
     });
   }
 
@@ -87,7 +82,7 @@ class _FirstPageState extends State<FirstPage>
                       },
                       itemCount: items.length + 1),
                 ),
-                SearchTitleBar(_alphaController),
+                SearchTitleBar(_customScrollController),
               ],
             )));
   }
