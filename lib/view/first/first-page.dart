@@ -18,7 +18,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage>
     with AutomaticKeepAliveClientMixin, AfterLayoutMixin<FirstPage> {
   ScrollController _scrollController = new ScrollController();
-  TitleBarAlphaController _alphaController =new TitleBarAlphaController();
+  TitleBarAlphaController _alphaController = new TitleBarAlphaController();
 
   List items = new List();
   int _pageIndex = 0;
@@ -64,12 +64,12 @@ class _FirstPageState extends State<FirstPage>
     super.build(context);
     return SafeArea(
         bottom: false,
-        child: Stack(
-          children: <Widget>[
-            Container(
-                color: Color(backgroundColor),
-                child: RefreshIndicator(
-                  onRefresh: _refresh,
+        child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  color: Color(backgroundColor),
                   child: ListView.separated(
                       physics: new AlwaysScrollableScrollPhysics(),
                       controller: _scrollController,
@@ -86,10 +86,10 @@ class _FirstPageState extends State<FirstPage>
                         );
                       },
                       itemCount: items.length + 1),
-                )),
-            SearchTitleBar(_alphaController),
-          ],
-        ));
+                ),
+                SearchTitleBar(_alphaController),
+              ],
+            )));
   }
 
   Future<Null> _refresh() async {
