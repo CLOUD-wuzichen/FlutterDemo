@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_flutter/view/first/collected-page.dart';
 import 'package:learn_flutter/view/first/search-input.dart';
 import 'package:learn_flutter/view/native.dart';
 import 'package:learn_flutter/view/first/web-view-page.dart';
@@ -10,6 +11,7 @@ class Routes {
   static String home = "/home";
   static String webView = '/web-view';
   static String search = '/search';
+  static String collected= '/collected';
   static String native = '/native';
 
   static void configureRoutes(Router router) {
@@ -23,6 +25,8 @@ class Routes {
         handler: nativeHandler, transitionType: TransitionType.inFromRight);
     router.define(search,
         handler: searchHandler, transitionType: TransitionType.fadeIn);
+    router.define(collected,
+        handler: collectedHandler, transitionType: TransitionType.inFromRight);
   }
 }
 
@@ -56,5 +60,12 @@ var nativeHandler = new Handler(
 var searchHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return new SearchPageWidget();
+  },
+);
+
+// 收藏列表
+var collectedHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return new CollectedPage();
   },
 );

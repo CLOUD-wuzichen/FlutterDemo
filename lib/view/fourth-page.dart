@@ -39,8 +39,7 @@ class _FourthPageState extends State<FourthPage>
             RaisedButton(
               child: new Text('test'),
               onPressed: () {
-                Application.router.navigateTo(context,
-                    '${Routes.native}?filePath=${Uri.encodeComponent("lib/test/net.dart")}');
+                Application.router.navigateTo(context, Routes.native);
               },
             ),
           ],

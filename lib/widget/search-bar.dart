@@ -35,37 +35,59 @@ class SearchTitleState extends State<SearchTitleBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
-      color: Color.fromARGB(_alpha, 255, 255, 255),
-      height: 45,
-      width: MediaQuery.of(context).size.width,
-      child: GestureDetector(
-        onTap: () {
-          Application.router.navigateTo(context, Routes.search);
-        },
-        child: Container(
-          alignment: Alignment.centerLeft,
-          height: 32,
-          margin: EdgeInsets.only(left: 50, right: 50),
-          decoration: BoxDecoration(
-              color: Colors.white70, borderRadius: BorderRadius.circular(20)),
-          child: Row(
-            children: <Widget>[
-              Padding(
-                padding: new EdgeInsets.only(right: 8.0, left: 14.0),
-                child: new Icon(
-                  Icons.search,
-                  size: 20.0,
-                  color: Color(textColor3),
+        alignment: Alignment.center,
+        color: Color.fromARGB(_alpha, 255, 255, 255),
+        height: 45,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          alignment: Alignment.centerRight,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                Application.router.navigateTo(context, Routes.search);
+              },
+              child: Container(
+                alignment: Alignment.centerLeft,
+                height: 32,
+                margin: EdgeInsets.only(left: 50, right: 50),
+                decoration: BoxDecoration(
+                    color: Colors.white70,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: new EdgeInsets.only(right: 8.0, left: 14.0),
+                      child: new Icon(
+                        Icons.search,
+                        size: 20.0,
+                        color: Color(textColor3),
+                      ),
+                    ),
+                    TextLabel("搜索",
+                        color: textColor3,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14),
+                  ],
                 ),
               ),
-              TextLabel("搜索",
-                  color: textColor3, fontWeight: FontWeight.w500, fontSize: 14),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            GestureDetector(
+              onTap: (){
+                Application.router.navigateTo(context, Routes.collected);
+              },
+              child: Container(
+                width: 50,
+                alignment: Alignment.center,
+                height: 45,
+                child: Icon(
+                  Icons.favorite_border,
+                  size: 24,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }
 ////搜索标题bar end
