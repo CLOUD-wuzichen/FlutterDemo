@@ -1,5 +1,7 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
+import 'package:learn_flutter/event/event_bus.dart';
 import 'package:learn_flutter/route/application.dart';
 import 'package:learn_flutter/route/routers.dart';
 import 'package:learn_flutter/view/first/sql-collection.dart';
@@ -17,6 +19,13 @@ class CollectedPageState extends State<CollectedPage> {
   @override
   void initState() {
     super.initState();
+    _queryData();
+    ApplicationEvent.getInstance().on<CollectionEvent>().listen((event) {
+      _queryData();
+    });
+  }
+
+  void _queryData() {
     _collectionControl.getAllCollection().then((List list) {
       if (mounted) {
         setState(() {

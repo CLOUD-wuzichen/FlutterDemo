@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:learn_flutter/event/event_bus.dart';
 import 'package:learn_flutter/utils/widget-utils.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:after_layout/after_layout.dart';
@@ -26,7 +27,7 @@ class WebViewState extends State<WebViewWidget>
   @override
   void initState() {
     super.initState();
-    _collectionControl.queryCollectStatus(widget.url).then((List list){
+    _collectionControl.queryCollectStatus(widget.url).then((List list) {
       if (mounted) {
         setState(() {
           _isCollected = list.length > 0;
@@ -101,5 +102,6 @@ class WebViewState extends State<WebViewWidget>
         }
       });
     }
+    ApplicationEvent.getInstance().fire(CollectionEvent());
   }
 }

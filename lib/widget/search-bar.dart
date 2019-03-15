@@ -82,7 +82,7 @@ class SearchTitleState extends State<SearchTitleBar> {
                 child: Icon(
                   Icons.favorite_border,
                   size: 24,
-                  color: Colors.black,
+                  color: Colors.redAccent,
                 ),
               ),
             )
