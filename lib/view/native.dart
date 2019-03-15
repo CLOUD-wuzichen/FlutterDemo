@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
@@ -9,14 +11,14 @@ class NativeWidget extends StatefulWidget {
 }
 
 class NativeState extends State<NativeWidget> {
-  String _height = "";
-  String _batteryLevel = "";
+  String text = "";
+  File _image;
 
   Future<void> _getBatteryLevel() async {
     String batteryLevel = await NativePlugin.getBatteryLevel();
     if (!mounted) return;
     setState(() {
-      _batteryLevel = batteryLevel;
+      text = batteryLevel;
     });
   }
 
@@ -24,9 +26,18 @@ class NativeState extends State<NativeWidget> {
     String height = await NativePlugin.getStatusBarHeight();
     if (!mounted) return;
     setState(() {
-      _height = height;
+      text = height;
     });
   }
+
+  Future<void> _getImage() async {
+//    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+//    setState(() {
+//      _image = image;
+//    });
+  }
+
+  Future<void> _getDeviece() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +48,28 @@ class NativeState extends State<NativeWidget> {
             Navigator.of(context).pop();
           },
         ),
-        body: new Center(
-          child: new Column(
-            children: [
-              Padding(padding: EdgeInsets.only(top: 100)),
-              RaisedButton(
-                child: new Text('status bar heigh: $_height'),
-                onPressed: _getStatusBarHeight,
-              ),
-              RaisedButton(
-                child: Text('battery level: $_batteryLevel'),
-                onPressed: _getBatteryLevel,
-              ),
-            ],
-          ),
+        body: Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 20)),
+            Row(
+              children: [
+                RaisedButton(
+                  child: new Text('状态栏高度'),
+                  onPressed: _getStatusBarHeight,
+                ),
+                RaisedButton(
+                  child: Text('电池电量'),
+                  onPressed: _getBatteryLevel,
+                ),
+                RaisedButton(
+                  child: Text('选择照片'),
+                  onPressed: _getImage,
+                ),
+              ],
+            ),
+            Padding(padding: EdgeInsets.only(top: 50)),
+            _image == null ? Text(text) : Image.file(_image),
+          ],
         ));
   }
 }
