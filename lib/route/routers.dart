@@ -2,9 +2,9 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/view/first/collected-page.dart';
 import 'package:learn_flutter/view/first/search-input.dart';
-import 'package:learn_flutter/view/native.dart';
 import 'package:learn_flutter/view/first/web-view-page.dart';
 import 'package:learn_flutter/view/home-page.dart';
+import 'package:learn_flutter/view/natvie-page.dart';
 
 class Routes {
   static String root = "/";
@@ -52,7 +52,7 @@ var webViewHandler = new Handler(
 // 原生
 var nativeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return new NativeWidget();
+    return new NativePageWidget();
   },
 );
 

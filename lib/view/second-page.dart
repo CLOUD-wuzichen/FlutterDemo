@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/test/layout.dart';
 
 class SecondPage extends StatefulWidget {
   @override
@@ -23,6 +22,4 @@ class _SecondPageState extends State<SecondPage> with AutomaticKeepAliveClientMi
       ),
     );
   }
-
-
 }

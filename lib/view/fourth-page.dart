@@ -19,12 +19,10 @@ class _FourthPageState extends State<FourthPage>
   @override
   void initState() {
     super.initState();
-    print("FourthPage initState");
   }
 
   @override
   void dispose() {
-    print("FourthPage dispose");
     super.dispose();
   }
 
@@ -37,7 +35,7 @@ class _FourthPageState extends State<FourthPage>
           children: [
             Padding(padding: EdgeInsets.only(top: 100)),
             RaisedButton(
-              child: new Text('test'),
+              child: new Text('原生'),
               onPressed: () {
                 Application.router.navigateTo(context, Routes.native);
               },
