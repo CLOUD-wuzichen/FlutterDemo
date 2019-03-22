@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:learn_flutter/color.dart';
+import 'package:learn_flutter/utils/permission-utils.dart';
 import 'package:learn_flutter/utils/widget-utils.dart';
 import 'package:learn_flutter/widget/custom_view.dart';
 import 'package:native_plugin/native_plugin.dart';
-import 'package:image_picker/image_picker.dart';
-
 
 class NativePageWidget extends StatefulWidget {
   @override
@@ -34,43 +33,59 @@ class NativePageState extends State<NativePageWidget> {
   }
 
   void _pickImage() {
-    showModalBottomSheet(context: context, builder: (BuildContext context){
-      return Container(
-          child: Column(
-            mainAxisSize:MainAxisSize.min ,
-            children: <Widget>[
-              GestureDetector(
-                onTap:(){
-                  WidgetUtils.showToast("相机");
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  height: 56,
-                  alignment: Alignment.center,
-                  child: TextLabel("相机", fontSize: 16),
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    int status = await PermissionUtils.checkPermission(
+                        PermissionType.camera);
+                    if(status==PermissionUtils.denied){
+                      WidgetUtils.showToast("用户已拒绝相机权限，请去设置更改");
+                      return;
+                    }
+                    String path = await NativePlugin.takePhoto();
+                    setState(() {
+                      _image = File(path);
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 56,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: TextLabel("相机", fontSize: 16),
+                  ),
                 ),
-              ),
-              Container(height:1,color: Color(dividerColor),),
-              GestureDetector(
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                  setState(() {
-                    _image = image;
-                  });
-                },
-                child: Container(
-                  height: 56,
-                  alignment: Alignment.center,
-                  child: TextLabel("图库", fontSize: 16),
+                Container(
+                  height: 1,
+                  color: Color(dividerColor),
                 ),
-              )
-
-            ],
-          ),
-      );
-
-    });
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    String path = await NativePlugin.pickPhoto();
+                    setState(() {
+                      _image = File(path);
+                    });
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 56,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: TextLabel("图库", fontSize: 16),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -102,7 +117,14 @@ class NativePageState extends State<NativePageWidget> {
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 50)),
-            _image == null ? Text(text) : Image.file(_image),
+            Text(text),
+            _image == null
+                ? Text("")
+                : Image.file(
+                    _image,
+                    width: 250,
+                    height: 250,
+                  ),
           ],
         ));
   }
