@@ -45,7 +45,10 @@ class NativePageState extends State<NativePageWidget> {
                     Navigator.of(context).pop();
                     int status = await PermissionUtils.checkPermission(
                         PermissionType.camera);
-                    if(status==PermissionUtils.denied){
+                    if (status == PermissionUtils.denied) {
+                      WidgetUtils.showToast("获取权限失败");
+                      return;
+                    } else if (status == PermissionUtils.denied_forever) {
                       WidgetUtils.showToast("用户已拒绝相机权限，请去设置更改");
                       return;
                     }

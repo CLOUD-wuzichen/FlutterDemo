@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:native_plugin/native_plugin.dart';
 
 class WidgetUtils {
-  static  showToast(msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        backgroundColor: Colors.black87,
-        textColor: Colors.white,
-        fontSize: 16.0);
+  static showToast(msg) {
+    NativePlugin.showToast(msg);
   }
 }

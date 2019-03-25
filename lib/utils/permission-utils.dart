@@ -10,6 +10,7 @@ class PermissionType {
 }
 
 class PermissionUtils {
+  static const int denied_forever = -2;
   static const int denied = -1;
   static const int granted = 0;
 
@@ -17,6 +18,7 @@ class PermissionUtils {
     int result = denied;
     PermissionStatus status =
         await PermissionHandler().checkPermissionStatus(name);
+    bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(name);
     if (status == PermissionStatus.granted) {
       result = granted;
     } else {
@@ -24,20 +26,26 @@ class PermissionUtils {
           await PermissionHandler().requestPermissions([name]);
       permissions.forEach((item, status) {
         if (item == name) {
-          result = changeStatus(status);
+          result = changeStatus(status,isShown);
         }
       });
     }
     return result;
   }
 
-  static int changeStatus(PermissionStatus status) {
+  static int changeStatus(PermissionStatus status, bool isShown) {
     switch (status) {
       case PermissionStatus.granted:
         return granted;
         break;
       case PermissionStatus.denied:
-        return denied;
+        if(isShown){
+          //可选不再显示
+          return denied;
+        }else{
+          //永久拒绝
+          return denied_forever;
+        }
         break;
       case PermissionStatus.disabled:
         return denied;
